@@ -10,6 +10,7 @@ import net.dv8tion.jda.api.hooks.ListenerAdapter;
 import net.dv8tion.jda.api.interactions.commands.build.SlashCommandData;
 import org.jetbrains.annotations.NotNull;
 import org.mooner.wordbot.cmd.buttons.RiceButton;
+import org.mooner.wordbot.cmd.commands.FastCommand;
 import org.mooner.wordbot.cmd.commands.LogViewCommand;
 import org.mooner.wordbot.cmd.commands.StartCommand;
 import org.mooner.wordbot.cmd.selects.RiceSelects;
@@ -40,6 +41,7 @@ public class BotEventListener extends ListenerAdapter {
     public void register() {
         commands.put("start", new StartCommand());
         commands.put("log", new LogViewCommand());
+        commands.put("fast", new FastCommand());
 
         buttons.put("rice", new RiceButton());
 

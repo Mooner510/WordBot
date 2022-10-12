@@ -51,6 +51,7 @@ public class Main {
                     means6 = new HashMap<>();
                     UpdateManager.update("5", letters5, means5);
                     UpdateManager.update("6", letters6, means6);
+                    System.out.println("Update Successful");
                 }
                 case "", "s", "S", "ㄴ", "stop", "ㄴ새ㅔ", "STOP" -> {
                     GameManager.stopAll();
