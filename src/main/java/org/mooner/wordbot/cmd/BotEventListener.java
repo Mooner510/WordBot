@@ -98,7 +98,7 @@ public class BotEventListener extends ListenerAdapter {
                         message.delete().queue();
                         EmbedBuilder builder = new EmbedBuilder();
                         builder.setColor(Color.cyan);
-                        builder.setTitle("문제 포기");
+                        builder.setTitle((game.isFast() ? "[스피드런] " : "") + "문제 포기");
                         builder.appendDescription("문제를 푸는 도중 포기했습니다.")
                                 .appendDescription("\n진행한 문항 수: **`" + game.current() + "/" + game.size() + "`**")
                                 .appendDescription("\n최종 점수: **" + game.getScore() + "**")
@@ -118,7 +118,7 @@ public class BotEventListener extends ListenerAdapter {
                     ResultPackage compare = game.compare(message.getContentRaw());
                     game.getLastMessage().editMessageEmbeds(compare.getEmbed())
                             .queue(m -> m.editMessageEmbeds(StartCommand.getEmbed(game))
-                                    .queueAfter(2, TimeUnit.SECONDS, game::setLastMessage)
+                                    .queueAfter(game.isFast() ? 800 : 3000, TimeUnit.MILLISECONDS, game::setLastMessage)
                             );
                 }
             }

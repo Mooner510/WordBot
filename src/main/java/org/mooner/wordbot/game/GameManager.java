@@ -18,7 +18,7 @@ public class GameManager {
         return gameMap.get(id);
     }
 
-    public static Game startGame(long id, long channel, GameType type) {
+    public static Game startGame(long id, long channel, GameType type, boolean fast) {
         List<String> cloneList = switch (type) {
             case LETTER_5 -> new ArrayList<>(Main.letters5.keySet());
             case MEANS_5 -> new ArrayList<>(Main.means5.keySet());
@@ -26,7 +26,7 @@ public class GameManager {
             case MEANS_6 -> new ArrayList<>(Main.means6.keySet());
         };
         Collections.shuffle(cloneList);
-        Game game = new Game(id, channel, type, cloneList);
+        Game game = new Game(id, channel, fast, type, cloneList);
         gameMap.put(id, game);
         return game;
     }
