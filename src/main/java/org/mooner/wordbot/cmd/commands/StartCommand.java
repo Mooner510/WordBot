@@ -38,8 +38,10 @@ public class StartCommand implements BotCommand {
                     .appendDescription("\nPerfect: **" + game.getPerfect() + "**/"+game.size() + " [" + (game.getPerfect() == 0 ? 0 : game.getPerfect() * 100 / game.size()) + "%]")
                     .appendDescription("\n\n아래의 Key를 복사하여 나중에 해당 문제 결과를 확인할 수 있습니다.");
             builder.setFooter("Key: " + GameManager.stopGame(game, true));
-            game.getLastMessage().getChannel().sendMessage(":tada: **풀콤보다!! FULL COMBO!!!** :tada:")
-                    .queueAfter(2, TimeUnit.SECONDS);
+            if(game.getPerfect() == game.size()) {
+                game.getLastMessage().getChannel().sendMessage(":tada: **풀콤보다!! FULL COMBO!!!** :tada:")
+                        .queueAfter(2, TimeUnit.SECONDS);
+            }
         } else {
             Random random = new Random();
             builder.setColor(new Color(random.nextInt(256), random.nextInt(256), random.nextInt(256)));

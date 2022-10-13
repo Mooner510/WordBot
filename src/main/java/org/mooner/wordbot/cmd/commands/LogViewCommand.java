@@ -32,11 +32,11 @@ public class LogViewCommand implements BotCommand {
             UUID u = UUID.fromString(uuid);
             BufferedReader reader = new BufferedReader(new FileReader("src/main/resources/log/"+u+".log"));
             builder.setColor(Color.MAGENTA);
-            GameType type = GameType.valueOf(reader.readLine());
+            User user = Main.jda.getUserById(Long.parseLong(reader.readLine()));
             boolean fast = reader.readLine().equals("true");
+            GameType type = GameType.valueOf(reader.readLine());
             builder.setTitle("과거 기록: " + (fast ? "[스피드런] " : "") + type.getTag());
             HashMap<String, List<String>> answer = type == GameType.LETTER_5 ? Main.letters5 : type == GameType.LETTER_6 ? Main.letters6 : type == GameType.MEANS_5 ? Main.means5 : Main.means6;
-            User user = Main.jda.getUserById(Long.parseLong(reader.readLine()));
             builder.setAuthor(user.getName(), null, user.getAvatarUrl());
             builder.addField("최종 점수", reader.readLine(), true);
             builder.addField("Max Combo", reader.readLine(), true);
