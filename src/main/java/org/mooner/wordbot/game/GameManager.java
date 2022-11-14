@@ -21,7 +21,7 @@ public class GameManager {
     public static Game startGame(long id, long channel, GameType type) {
         List<String> cloneList = new ArrayList<>(Main.getResource(type).keySet());
         Collections.shuffle(cloneList);
-        Game game = new Game(id, channel, type, cloneList);
+        Game game = new Game(id, channel, fast, type, cloneList);
         gameMap.put(id, game);
         return game;
     }

@@ -18,6 +18,7 @@ public class Game {
     private final List<Boolean> corrects;
 
     private final GameType type;
+    private final boolean isFast;
 
     private final long startTime, id, channel;
 
@@ -32,10 +33,11 @@ public class Game {
 
     private Message lastMessage;
 
-    public Game(long id, long channel, GameType type, List<String> questions) {
+    public Game(long id, long channel, boolean fast, GameType type, List<String> questions) {
         this.id = id;
         this.channel = channel;
         this.type = type;
+        this.isFast = fast;
         this.questions = questions;
         this.startTime = System.currentTimeMillis();
         corrects = new ArrayList<>();
@@ -115,6 +117,10 @@ public class Game {
         return maxCombo;
     }
 
+    public boolean isFast() {
+        return isFast;
+    }
+
     public UUID saveGame() {
         try {
             UUID uuid = UUID.randomUUID();
@@ -123,6 +129,7 @@ public class Game {
             try (FileWriter fileWriter = new FileWriter(file)) {
                 PrintWriter printWriter = new PrintWriter(fileWriter);
                 printWriter.println(id);
+                printWriter.println(isFast);
                 printWriter.println(type);
                 printWriter.println(score);
                 printWriter.println(maxCombo);

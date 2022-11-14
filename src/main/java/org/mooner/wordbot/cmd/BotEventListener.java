@@ -10,6 +10,7 @@ import net.dv8tion.jda.api.hooks.ListenerAdapter;
 import net.dv8tion.jda.api.interactions.commands.build.SlashCommandData;
 import org.jetbrains.annotations.NotNull;
 import org.mooner.wordbot.cmd.buttons.RiceButton;
+import org.mooner.wordbot.cmd.commands.FastCommand;
 import org.mooner.wordbot.cmd.commands.LogViewCommand;
 import org.mooner.wordbot.cmd.commands.StartCommand;
 import org.mooner.wordbot.cmd.selects.RiceSelects;
@@ -40,6 +41,7 @@ public class BotEventListener extends ListenerAdapter {
     public void register() {
         commands.put("start", new StartCommand());
         commands.put("log", new LogViewCommand());
+        commands.put("fast", new FastCommand());
 
         buttons.put("rice", new RiceButton());
 
@@ -98,7 +100,7 @@ public class BotEventListener extends ListenerAdapter {
                         message.delete().queue();
                         EmbedBuilder builder = new EmbedBuilder();
                         builder.setColor(Color.cyan);
-                        builder.setTitle("문제 포기");
+                        builder.setTitle((game.isFast() ? "[스피드런] " : "") + "문제 포기");
                         builder.appendDescription("문제를 푸는 도중 포기했습니다.")
                                 .appendDescription("\n진행한 문항 수: **`" + game.current() + "/" + game.size() + "`**")
                                 .appendDescription("\n최종 점수: **" + game.getScore() + "**")
@@ -118,7 +120,7 @@ public class BotEventListener extends ListenerAdapter {
                     ResultPackage compare = game.compare(message.getContentRaw());
                     game.getLastMessage().editMessageEmbeds(compare.getEmbed())
                             .queue(m -> m.editMessageEmbeds(StartCommand.getEmbed(game))
-                                    .queueAfter(2, TimeUnit.SECONDS, game::setLastMessage)
+                                    .queueAfter(game.isFast() ? 800 : 3000, TimeUnit.MILLISECONDS, game::setLastMessage)
                             );
                 }
             }

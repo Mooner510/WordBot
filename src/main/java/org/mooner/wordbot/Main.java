@@ -60,6 +60,7 @@ public class Main {
                         char c = s.charAt(0);
                         resources.add(new GameResource(GameType.valueOf("LETTER_"+c), GameType.valueOf("MEANS_"+c)));
                     }
+                    System.out.println("Update Successful");
                 }
                 case "", "s", "S", "ㄴ", "stop", "ㄴ새ㅔ", "STOP" -> {
                     GameManager.stopAll();

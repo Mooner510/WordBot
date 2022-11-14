@@ -31,7 +31,7 @@ public class ResultPackage {
         if(combo > 1)
             builder.appendDescription("\n점수: **" + score + "** [ +" + additiveScore + " ] (+" + ((combo - 1) * 5) + ")");
         else builder.appendDescription("\n점수: **" + score + "** [ +" + additiveScore + " ]");
-        builder.appendDescription("\n\n2초 후에 다음 문제로 넘어갑니다");
+        builder.appendDescription("\n\n곧 다음 문제로 넘어갑니다");
         builder.setFooter(current + "/" + size);
         if(additiveScore == 100) builder.setColor(Color.GREEN);
         else if(additiveScore >= 75) builder.setColor(Color.YELLOW);
