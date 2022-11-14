@@ -36,9 +36,8 @@ build/
 
 ### Mac OS ###
 .DS_Store
-!/src/main/resources/log/**
+
+/src/main/resources/log/**
 /src/main/resources/command.log
 /src/main/resources/DB.db
 /src/main/resources/schools.txt
-!/src/main/resources/data/5.yml
-!/src/main/resources/data/6.yml

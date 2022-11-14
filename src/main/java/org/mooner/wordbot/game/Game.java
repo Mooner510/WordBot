@@ -117,11 +117,15 @@ public class Game {
         return maxCombo;
     }
 
+    public long getStartTime() {
+        return startTime;
+    }
+
     public boolean isFast() {
         return isFast;
     }
 
-    public UUID saveGame() {
+    public UUID saveGame(long end) {
         try {
             UUID uuid = UUID.randomUUID();
             File file = new File("src/main/resources/log/" + uuid + ".log");
@@ -134,6 +138,7 @@ public class Game {
                 printWriter.println(score);
                 printWriter.println(maxCombo);
                 printWriter.println(perfect);
+                printWriter.println(end - startTime);
                 printWriter.println(size());
                 int s = questions.size();
                 for (int i = 0; i < s; i++) {

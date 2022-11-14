@@ -19,6 +19,8 @@ import java.util.List;
 import java.util.Objects;
 import java.util.UUID;
 
+import static org.mooner.wordbot.game.GameManager.parsePlayTime;
+
 public class LogViewCommand implements BotCommand {
     @Override
     public SlashCommandData getCommand() {
@@ -32,7 +34,7 @@ public class LogViewCommand implements BotCommand {
             UUID u = UUID.fromString(uuid);
             BufferedReader reader = new BufferedReader(new FileReader("src/main/resources/log/"+u+".log"));
             builder.setColor(Color.MAGENTA);
-            User user = Main.jda.getUserById(Long.parseLong(reader.readLine()));
+            User user = Main.jda.getUserById(reader.readLine());
             boolean fast = reader.readLine().equals("true");
             GameType type = GameType.valueOf(reader.readLine());
             HashMap<String, List<String>> answer = Main.getResource(type);
@@ -43,6 +45,8 @@ public class LogViewCommand implements BotCommand {
             int perfect = Integer.parseInt(reader.readLine());
             int size = Integer.parseInt(reader.readLine());
             builder.addField("Perfect", perfect + "/" + size + " [" + (perfect * 100 / size) + "%]", true);
+            String playTime = reader.readLine();
+            builder.addField("PlayTime", playTime.equals("?") ? "알 수 없음" : parsePlayTime(Long.parseLong(playTime)), true);
             builder.appendDescription("```diff");
             String s;
             while ((s = reader.readLine()) != null) {
