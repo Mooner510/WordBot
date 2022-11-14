@@ -34,7 +34,7 @@ public class LogViewCommand implements BotCommand {
             builder.setColor(Color.MAGENTA);
             GameType type = GameType.valueOf(reader.readLine());
             builder.setTitle("과거 기록: " + type.getTag());
-            HashMap<String, List<String>> answer = type == GameType.LETTER_5 ? Main.letters5 : type == GameType.LETTER_6 ? Main.letters6 : type == GameType.MEANS_5 ? Main.means5 : Main.means6;
+            HashMap<String, List<String>> answer = Main.getResource(type);
             User user = Main.jda.getUserById(Long.parseLong(reader.readLine()));
             builder.setAuthor(user.getName(), null, user.getAvatarUrl());
             builder.addField("최종 점수", reader.readLine(), true);

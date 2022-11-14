@@ -40,5 +40,5 @@ build/
 /src/main/resources/command.log
 /src/main/resources/DB.db
 /src/main/resources/schools.txt
-!/src/main/resources/5.yml
-!/src/main/resources/6.yml
+!/src/main/resources/data/5.yml
+!/src/main/resources/data/6.yml

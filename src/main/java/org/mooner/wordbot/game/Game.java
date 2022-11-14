@@ -61,7 +61,7 @@ public class Game {
     }
 
     public ResultPackage compare(String input) {
-        List<String> answer = type == GameType.LETTER_5 ? Main.letters5.get(leastQuestion) : type == GameType.LETTER_6 ? Main.letters6.get(leastQuestion) : type == GameType.MEANS_5 ? Main.means5.get(leastQuestion) : Main.means6.get(leastQuestion);
+        List<String> answer = Main.getResource(type).get(leastQuestion);
         inputs.add(input);
         StringJoiner joiner = new StringJoiner(", ");
         String rep = type != GameType.MEANS_5 && type != GameType.MEANS_6 ? input.replace(" ", "") : input;

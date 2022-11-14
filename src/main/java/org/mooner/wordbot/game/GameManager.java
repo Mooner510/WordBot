@@ -19,12 +19,7 @@ public class GameManager {
     }
 
     public static Game startGame(long id, long channel, GameType type) {
-        List<String> cloneList = switch (type) {
-            case LETTER_5 -> new ArrayList<>(Main.letters5.keySet());
-            case MEANS_5 -> new ArrayList<>(Main.means5.keySet());
-            case LETTER_6 -> new ArrayList<>(Main.letters6.keySet());
-            case MEANS_6 -> new ArrayList<>(Main.means6.keySet());
-        };
+        List<String> cloneList = new ArrayList<>(Main.getResource(type).keySet());
         Collections.shuffle(cloneList);
         Game game = new Game(id, channel, type, cloneList);
         gameMap.put(id, game);

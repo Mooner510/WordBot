@@ -6,9 +6,9 @@ import java.io.IOException;
 import java.util.*;
 
 public class UpdateManager {
-    public static void update(String file, HashMap<String, List<String>> letter, HashMap<String, List<String>> means) {
+    public static void update(char c, HashMap<String, List<String>> letter, HashMap<String, List<String>> means) {
         try {
-            BufferedReader reader = new BufferedReader(new FileReader("src/main/resources/"+file+".yml"));
+            BufferedReader reader = new BufferedReader(new FileReader("src/main/resources/data/"+c+".yml"));
             String s, eng;
             String[] mean;
             while ((s = reader.readLine()) != null) {
