@@ -22,10 +22,8 @@ public class Main {
     public static HashSet<GameResource> resources;
 
     public static HashMap<String, List<String>> getResource(GameType type) {
-        if(type.getTag().contains("뜻"))
-            return resources.stream().filter(r -> r.isType(type)).findFirst().orElseThrow().getMeans();
-        else
-            return resources.stream().filter(r -> r.isType(type)).findFirst().orElseThrow().getLetters();
+        if(type.getTag().contains("뜻")) return resources.stream().filter(r -> r.isType(type)).findFirst().orElseThrow().getMeans();
+        else return resources.stream().filter(r -> r.isType(type)).findFirst().orElseThrow().getLetters();
     }
 
     public static void main(String[] args) {

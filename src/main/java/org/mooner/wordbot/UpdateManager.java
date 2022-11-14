@@ -21,6 +21,8 @@ public class UpdateManager {
                 means.put(String.join(", ", mean), List.of(eng));
             }
             reader.close();
-        } catch (IOException ignore) {}
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 }

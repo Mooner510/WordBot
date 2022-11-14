@@ -19,7 +19,7 @@ public class GameResource {
         this.letterType = letterType;
         this.meanType = meanType;
 
-        UpdateManager.update(letterType.toString().charAt(0), letters, means);
+        UpdateManager.update(letterType.getTag().charAt(0), letters, means);
     }
 
     public HashMap<String, List<String>> getLetters() {
