@@ -10,8 +10,8 @@ public class A {
             BufferedReader reader = new BufferedReader(new FileReader("src/main/resources/asdf.txt"));
             String s;
             while ((s = reader.readLine()) != null) {
-                if (s.isBlank()) continue;
-                System.out.println("<p>"+s+"</p>");
+                if (s.isEmpty()) System.out.println("<br>");
+                else if (!s.isBlank()) System.out.println("<p>"+s+"</p>");
             }
             reader.close();
         } catch (IOException ignore) {}
