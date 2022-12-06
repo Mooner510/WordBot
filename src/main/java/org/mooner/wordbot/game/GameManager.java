@@ -47,21 +47,17 @@ public class GameManager {
                 time %= MINUTE;
             } else builder.append(' ').append(0).append('m');
             if(time > SECOND) {
-                builder.append(' ').append(time / SECOND).append('s');
-                time %= SECOND;
-            } else builder.append(' ').append(0).append('s');
+                builder.append(' ').append(time / SECOND).append('.').append(time % SECOND).append('s');
+            } else builder.append(' ').append(0).append('.').append(time % SECOND).append('s');
         } else if(time > MINUTE) {
             builder.append(time / MINUTE).append('m');
             time %= MINUTE;
             if(time > SECOND) {
-                builder.append(' ').append(time / SECOND).append('s');
-                time %= SECOND;
-            } else builder.append(' ').append(0).append('s');
+                builder.append(' ').append(time / SECOND).append('.').append(time % SECOND).append('s');
+            } else builder.append(' ').append(0).append('.').append(time % SECOND).append('s');
         } else if(time > SECOND) {
-            builder.append(time / SECOND).append('s');
-            time %= SECOND;
-        } else builder.append(0);
-        builder.append('.').append(time);
+            builder.append(time / SECOND).append('.').append(time % SECOND).append('s');
+        } else builder.append(0).append('.').append(time % SECOND).append('s');
         return builder.toString();
     }
 

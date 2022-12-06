@@ -6,7 +6,9 @@ public enum GameType {
     LETTER_6("6과 단어"),
     MEANS_6("6과 단어 뜻"),
     LETTER_7("7과 단어"),
-    MEANS_7("7과 단어 뜻")
+    MEANS_7("7과 단어 뜻"),
+    LETTER_8("8과 단어"),
+    MEANS_8("8과 단어 뜻")
     ;
 
     private final String tag;

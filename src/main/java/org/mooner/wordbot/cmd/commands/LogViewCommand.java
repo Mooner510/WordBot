@@ -34,19 +34,24 @@ public class LogViewCommand implements BotCommand {
             UUID u = UUID.fromString(uuid);
             BufferedReader reader = new BufferedReader(new FileReader("src/main/resources/log/"+u+".log"));
             builder.setColor(Color.MAGENTA);
+
             User user = Main.jda.getUserById(reader.readLine());
             boolean fast = reader.readLine().equals("true");
             GameType type = GameType.valueOf(reader.readLine());
+            String score = reader.readLine();
+            String maxCombo = reader.readLine();
+            int perfect = Integer.parseInt(reader.readLine());
+            long time = Long.parseLong(reader.readLine());
+            int size = Integer.parseInt(reader.readLine());
+
             HashMap<String, List<String>> answer = Main.getResource(type);
             builder.setTitle("과거 기록: " + (fast ? "[스피드런] " : "") + type.getTag());
             builder.setAuthor(user.getName(), null, user.getAvatarUrl());
-            builder.addField("최종 점수", reader.readLine(), true);
-            builder.addField("Max Combo", reader.readLine(), true);
-            int perfect = Integer.parseInt(reader.readLine());
-            int size = Integer.parseInt(reader.readLine());
+            builder.addField("최종 점수", score, true);
+            builder.addField("Max Combo", maxCombo, true);
             builder.addField("Perfect", perfect + "/" + size + " [" + (perfect * 100 / size) + "%]", true);
             String playTime = reader.readLine();
-            builder.addField("PlayTime", playTime.equals("?") ? "알 수 없음" : parsePlayTime(Long.parseLong(playTime)), true);
+            builder.addField("PlayTime", playTime.equals("?") ? "알 수 없음" : parsePlayTime(time), true);
             builder.appendDescription("```diff");
             String s;
             while ((s = reader.readLine()) != null) {
