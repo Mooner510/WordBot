@@ -66,11 +66,11 @@ public class Game {
         List<String> answer = Main.getResource(type).get(leastQuestion);
         inputs.add(input);
         StringJoiner joiner = new StringJoiner(", ");
-        String rep = type != GameType.MEANS_5 && type != GameType.MEANS_6 ? input.replace(" ", "") : input;
+        String rep = !type.isMeanType() ? input.replace(" ", "") : input;
         int cur = 0;
         for (String s1 : answer) {
             joiner.add(s1);
-            if(type != GameType.MEANS_5 && type != GameType.MEANS_6) {
+            if(!type.isMeanType()) {
                 cur = Math.max(cur, (int) Math.round(StringManager.findSimilarity(rep, s1.replace(" ", "")) * 100));
             } else {
                 cur = Math.max(cur, (int) Math.round(StringManager.findSimilarity(input, s1) * 100));

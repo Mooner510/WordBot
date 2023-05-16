@@ -19,7 +19,8 @@ public class GameResource {
         this.letterType = letterType;
         this.meanType = meanType;
 
-        UpdateManager.update(letterType.getTag().charAt(0), letters, means);
+        String s = letterType.toString();
+        UpdateManager.update(Integer.parseInt(s.split("_")[1]), s.charAt(s.length() - 1), letters, means);
     }
 
     public HashMap<String, List<String>> getLetters() {

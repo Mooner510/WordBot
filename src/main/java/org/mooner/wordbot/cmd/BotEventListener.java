@@ -106,11 +106,11 @@ public class BotEventListener extends ListenerAdapter {
                                 .appendDescription("\n최종 점수: **" + game.getScore() + "**")
                                 .appendDescription("\n\nMax Combo: **" + game.getMaxCombo() + "**")
                                 .appendDescription("\nPerfect: **" + game.getPerfect() + "**");
-                        if(game.current() >= game.size() / 3) {
+                        if(game.current() >= game.size() / 5) {
                             builder.appendDescription("\n\n아래의 Key를 복사하여 나중에 해당 문제 결과를 확인할 수 있습니다.");
                             builder.setFooter("Key: " + GameManager.stopGame(game, true));
                         } else {
-                            builder.appendDescription("\n\n33% 이상 문제를 풀어야 문제 결과가 저장됩니다.");
+                            builder.appendDescription("\n\n20% 이상 문제를 풀어야 문제 결과가 저장됩니다.");
                             GameManager.stopGame(game, false);
                         }
                         game.getLastMessage().editMessageEmbeds(builder.build()).queue();

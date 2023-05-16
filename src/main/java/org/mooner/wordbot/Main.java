@@ -26,14 +26,22 @@ public class Main {
         else return resources.stream().filter(r -> r.isType(type)).findFirst().orElseThrow().getLetters();
     }
 
-    public static void main(String[] args) {
-        String[] file = Objects.requireNonNull(new File("src/main/resources/data/").list());
+    public static void update() {
         resources = new HashSet<>();
 
-        for (String s : file) {
+        for (String s : Objects.requireNonNull(new File("src/main/resources/data/2022/").list())) {
             char c = s.charAt(0);
-            resources.add(new GameResource(GameType.valueOf("LETTER_"+c), GameType.valueOf("MEANS_"+c)));
+            resources.add(new GameResource(GameType.valueOf("LETTER_2022_"+c), GameType.valueOf("MEANS_2022_"+c)));
         }
+
+        for (String s : Objects.requireNonNull(new File("src/main/resources/data/2023/").list())) {
+            char c = s.charAt(0);
+            resources.add(new GameResource(GameType.valueOf("LETTER_2023_"+c), GameType.valueOf("MEANS_2023_"+c)));
+        }
+    }
+
+    public static void main(String[] args) {
+        update();
 
         try {
             jda = JDABuilder.create(args[0], Arrays.asList(GatewayIntent.values()))
@@ -51,13 +59,7 @@ public class Main {
         tag: while(true) {
             switch (scanner.nextLine()) {
                 case "update" -> {
-                    file = Objects.requireNonNull(new File("src/main/resources/data/").list());
-                    resources = new HashSet<>();
-
-                    for (String s : file) {
-                        char c = s.charAt(0);
-                        resources.add(new GameResource(GameType.valueOf("LETTER_"+c), GameType.valueOf("MEANS_"+c)));
-                    }
+                    update();
                     System.out.println("Update Successful");
                 }
                 case "", "s", "S", "ㄴ", "stop", "ㄴ새ㅔ", "STOP" -> {
