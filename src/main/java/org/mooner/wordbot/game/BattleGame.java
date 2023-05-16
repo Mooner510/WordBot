@@ -21,10 +21,11 @@ public class BattleGame {
     private String leastQuestion;
 
     private int index;
-    private HashMap<Long, Integer> score;
-    private HashMap<Long, Integer> perfect;
-    private HashMap<Long, Integer> combo;
-    private HashMap<Long, Integer> maxCombo;
+    private final HashMap<Long, Integer> score;
+    private final HashMap<Long, Integer> trying;
+    private final HashMap<Long, Integer> perfect;
+    private final HashMap<Long, Integer> combo;
+    private final HashMap<Long, Integer> maxCombo;
     private final int size;
 
     private Message lastMessage;
@@ -38,6 +39,12 @@ public class BattleGame {
         inputs = new ArrayList<>();
         index = -1;
         this.size = questions.size();
+
+        score = new HashMap<>();
+        trying = new HashMap<>();
+        perfect = new HashMap<>();
+        combo = new HashMap<>();
+        maxCombo = new HashMap<>();
     }
 
     public long getChannel() {
@@ -60,16 +67,18 @@ public class BattleGame {
         List<String> answer = Main.getResource(type).get(leastQuestion);
         inputs.add(input);
         StringJoiner joiner = new StringJoiner(", ");
-        String rep = type != GameType.MEANS_5 && type != GameType.MEANS_6 ? input.replace(" ", "") : input;
-        int cur = 0;
+        String rep = !type.isMeanType() ? input.replace(" ", "") : input;
+        double percent = 0;
         for (String s1 : answer) {
             joiner.add(s1);
-            if(type != GameType.MEANS_5 && type != GameType.MEANS_6) {
-                cur = Math.max(cur, (int) Math.round(StringManager.findSimilarity(rep, s1.replace(" ", "")) * 100));
+            if(!type.isMeanType()) {
+                percent = StringManager.findSimilarity(rep, s1.replace(" ", ""));
             } else {
-                cur = Math.max(cur, (int) Math.round(StringManager.findSimilarity(input, s1) * 100));
+                percent = StringManager.findSimilarity(input, s1);
             }
         }
+
+//        score.merge(id, )
 //        score += cur + combo * 5;
 //        if(cur == 100) {
 //            perfect++;
