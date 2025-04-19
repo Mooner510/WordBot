@@ -10,17 +10,14 @@ public class GameResource {
     private final HashMap<String, List<String>> letters;
     private final HashMap<String, List<String>> means;
 
-    private final GameType letterType;
-    private final GameType meanType;
+    private final GameType type;
 
-    public GameResource(GameType letterType, GameType meanType) {
+    public GameResource(GameType type) {
         this.letters = new HashMap<>();
         this.means = new HashMap<>();
-        this.letterType = letterType;
-        this.meanType = meanType;
+        this.type = type;
 
-        String s = letterType.toString();
-        UpdateManager.update(Integer.parseInt(s.split("_")[1]), s.charAt(s.length() - 1), letters, means);
+        UpdateManager.update(type, letters, means);
     }
 
     public HashMap<String, List<String>> getLetters() {
@@ -32,6 +29,6 @@ public class GameResource {
     }
 
     public boolean isType(GameType gameType) {
-        return letterType == gameType || meanType == gameType;
+        return this.type == gameType;
     }
 }

@@ -68,8 +68,11 @@ public class StartCommand implements BotCommand {
             GameManager.stopGame(pGame, false);
         }
         String s = Objects.requireNonNull(event.getOption("선택")).getAsString();
-        GameType type = GameType.valueOf(s);
-        Game game = GameManager.startGame(event.getUser().getIdLong(), event.getChannel().getIdLong(), type, false);
+        GameType type;
+        boolean mean = s.endsWith("?");
+        if(mean) type = GameType.valueOf(s.substring(0, s.length() - 1));
+        else type = GameType.valueOf(s);
+        Game game = GameManager.startGame(event.getUser().getIdLong(), event.getChannel().getIdLong(), type, false, mean);
         EmbedBuilder builder = new EmbedBuilder();
         builder.setTitle(type.getTag());
         builder.appendDescription("단어 수: " + game.size());

@@ -8,6 +8,7 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.StringJoiner;
 import java.util.UUID;
@@ -19,8 +20,10 @@ public class Game {
 
     private final GameType type;
     private final boolean isFast;
+    private final boolean isMean;
 
     private final long startTime, id, channel;
+    private final HashMap<String, List<String>> resource;
 
     private String leastQuestion;
 
@@ -33,7 +36,7 @@ public class Game {
 
     private Message lastMessage;
 
-    public Game(long id, long channel, boolean fast, GameType type, List<String> questions) {
+    public Game(long id, long channel, boolean fast, boolean isMean, GameType type, List<String> questions) {
         this.id = id;
         this.channel = channel;
         this.type = type;
@@ -44,6 +47,8 @@ public class Game {
         inputs = new ArrayList<>();
         index = -1;
         this.size = questions.size();
+        this.isMean = isMean;
+        this.resource = Main.getResource(type, isMean);
     }
 
     public long getChannel() {
@@ -63,21 +68,21 @@ public class Game {
     }
 
     public ResultPackage compare(String input) {
-        List<String> answer = Main.getResource(type).get(leastQuestion);
+        List<String> answer = resource.get(leastQuestion);
         inputs.add(input);
         StringJoiner joiner = new StringJoiner(", ");
-        String rep = !type.isMeanType() ? input.replace(" ", "") : input;
+        String rep = !isMean ? input.replace(" ", "") : input;
         int cur = 0;
         for (String s1 : answer) {
             joiner.add(s1);
-            if(!type.isMeanType()) {
+            if (!isMean) {
                 cur = Math.max(cur, (int) Math.round(StringManager.findSimilarity(rep, s1.replace(" ", "")) * 100));
             } else {
                 cur = Math.max(cur, (int) Math.round(StringManager.findSimilarity(input, s1) * 100));
             }
         }
         score += cur + combo * 5;
-        if(cur == 100) {
+        if (cur == 100) {
             perfect++;
             corrects.add(true);
             combo++;
@@ -134,6 +139,7 @@ public class Game {
                 PrintWriter printWriter = new PrintWriter(fileWriter);
                 printWriter.println(id);
                 printWriter.println(isFast);
+                printWriter.println(isMean);
                 printWriter.println(type);
                 printWriter.println(score);
                 printWriter.println(maxCombo);
@@ -142,7 +148,7 @@ public class Game {
                 printWriter.println(size());
                 int s = questions.size();
                 for (int i = 0; i < s; i++) {
-                    if(inputs.size() > i)
+                    if (inputs.size() > i)
                         printWriter.println(questions.get(i) + "=" + corrects.get(i) + "=" + inputs.get(i));
                     else printWriter.println(questions.get(i) + "=.= ");
                 }

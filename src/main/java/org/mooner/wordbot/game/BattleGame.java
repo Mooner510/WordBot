@@ -64,19 +64,19 @@ public class BattleGame {
     }
 
     public ResultPackage compare(long id, String input) {
-        List<String> answer = Main.getResource(type).get(leastQuestion);
-        inputs.add(input);
-        StringJoiner joiner = new StringJoiner(", ");
-        String rep = !type.isMeanType() ? input.replace(" ", "") : input;
-        double percent = 0;
-        for (String s1 : answer) {
-            joiner.add(s1);
-            if(!type.isMeanType()) {
-                percent = StringManager.findSimilarity(rep, s1.replace(" ", ""));
-            } else {
-                percent = StringManager.findSimilarity(input, s1);
-            }
-        }
+//        List<String> answer = Main.getResource(type).get(leastQuestion);
+//        inputs.add(input);
+//        StringJoiner joiner = new StringJoiner(", ");
+//        String rep = !type.isMeanType() ? input.replace(" ", "") : input;
+//        double percent = 0;
+//        for (String s1 : answer) {
+//            joiner.add(s1);
+//            if(!type.isMeanType()) {
+//                percent = StringManager.findSimilarity(rep, s1.replace(" ", ""));
+//            } else {
+//                percent = StringManager.findSimilarity(input, s1);
+//            }
+//        }
 
 //        score.merge(id, )
 //        score += cur + combo * 5;

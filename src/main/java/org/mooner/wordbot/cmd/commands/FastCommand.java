@@ -22,7 +22,10 @@ public class FastCommand implements BotCommand {
     @Override
     public SlashCommandData getCommand() {
         OptionData data = new OptionData(OptionType.STRING, "선택", "무엇을 할꺼냐!", true);
-        for (GameType value : GameType.values()) data.addChoice(value.getTag(), value.toString());
+        for (GameType value : GameType.values()) {
+            data.addChoice(value.getTag() + " 뜻", value + "?");
+            data.addChoice(value.getTag() + " 단어", value.toString());
+        }
         return Commands.slash("fast", "스피드런 시작 (넘어가는 시간 1초)").addOptions(data);
     }
 
@@ -40,8 +43,11 @@ public class FastCommand implements BotCommand {
             GameManager.stopGame(pGame, false);
         }
         String s = Objects.requireNonNull(event.getOption("선택")).getAsString();
-        GameType type = GameType.valueOf(s);
-        Game game = GameManager.startGame(event.getUser().getIdLong(), event.getChannel().getIdLong(), type, true);
+        GameType type;
+        boolean mean = s.endsWith("?");
+        if(mean) type = GameType.valueOf(s.substring(0, s.length() - 1));
+        else type = GameType.valueOf(s);
+        Game game = GameManager.startGame(event.getUser().getIdLong(), event.getChannel().getIdLong(), type, true, mean);
         EmbedBuilder builder = new EmbedBuilder();
         builder.setTitle(type.getTag());
         builder.appendDescription("단어 수: " + game.size());

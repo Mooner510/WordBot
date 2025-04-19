@@ -19,24 +19,19 @@ public class Main {
     public static JDA jda;
     public static BotEventListener commandListener;
 
-    public static HashSet<GameResource> resources;
+    public static HashMap<GameType, GameResource> resources;
 
-    public static HashMap<String, List<String>> getResource(GameType type) {
-        if(type.getTag().contains("뜻")) return resources.stream().filter(r -> r.isType(type)).findFirst().orElseThrow().getMeans();
-        else return resources.stream().filter(r -> r.isType(type)).findFirst().orElseThrow().getLetters();
+    public static HashMap<String, List<String>> getResource(GameType type, boolean isMean) {
+        GameResource resource = resources.get(type);
+        return isMean ? resource.getMeans() : resource.getLetters();
     }
 
     public static void update() {
-        resources = new HashSet<>();
+        resources = new HashMap<>();
 
         for (String s : Objects.requireNonNull(new File("src/main/resources/data/2022/").list())) {
-            char c = s.charAt(0);
-            resources.add(new GameResource(GameType.valueOf("LETTER_2022_"+c), GameType.valueOf("MEANS_2022_"+c)));
-        }
-
-        for (String s : Objects.requireNonNull(new File("src/main/resources/data/2023/").list())) {
-            char c = s.charAt(0);
-            resources.add(new GameResource(GameType.valueOf("LETTER_2023_"+c), GameType.valueOf("MEANS_2023_"+c)));
+            GameType type = GameType.fromKey("2025/" + s);
+            resources.put(type, new GameResource(type));
         }
     }
 

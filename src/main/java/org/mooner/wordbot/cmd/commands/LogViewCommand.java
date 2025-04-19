@@ -37,6 +37,7 @@ public class LogViewCommand implements BotCommand {
 
             User user = Main.jda.getUserById(reader.readLine());
             boolean fast = reader.readLine().equals("true");
+            boolean mean = reader.readLine().equals("true");
             GameType type = GameType.valueOf(reader.readLine());
             String score = reader.readLine();
             String maxCombo = reader.readLine();
@@ -44,7 +45,7 @@ public class LogViewCommand implements BotCommand {
             long time = Long.parseLong(reader.readLine());
             int size = Integer.parseInt(reader.readLine());
 
-            HashMap<String, List<String>> answer = Main.getResource(type);
+            HashMap<String, List<String>> answer = Main.getResource(type, mean);
             builder.setTitle("과거 기록: " + (fast ? "[스피드런] " : "") + type.getTag());
             builder.setAuthor(user.getName(), null, user.getAvatarUrl());
             builder.addField("최종 점수", score, true);

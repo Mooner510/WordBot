@@ -18,10 +18,10 @@ public class GameManager {
         return gameMap.get(id);
     }
 
-    public static Game startGame(long id, long channel, GameType type, boolean fast) {
-        List<String> cloneList = new ArrayList<>(Main.getResource(type).keySet());
+    public static Game startGame(long id, long channel, GameType type, boolean fast, boolean mean) {
+        List<String> cloneList = new ArrayList<>(Main.getResource(type, mean).keySet());
         Collections.shuffle(cloneList);
-        Game game = new Game(id, channel, fast, type, cloneList);
+        Game game = new Game(id, channel, fast, mean, type, cloneList);
         gameMap.put(id, game);
         return game;
     }
