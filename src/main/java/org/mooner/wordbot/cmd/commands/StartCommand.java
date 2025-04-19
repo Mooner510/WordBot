@@ -22,7 +22,10 @@ public class StartCommand implements BotCommand {
     @Override
     public SlashCommandData getCommand() {
         OptionData data = new OptionData(OptionType.STRING, "선택", "무엇을 할꺼냐!", true);
-        for (GameType value : GameType.values()) data.addChoice(value.getTag(), value.toString());
+        for (GameType value : GameType.values()) {
+            data.addChoice(value.getTag() + " 뜻", value + "?");
+            data.addChoice(value.getTag() + " 단어", value.toString());
+        }
         return Commands.slash("start", "테스트 시작").addOptions(data);
     }
 

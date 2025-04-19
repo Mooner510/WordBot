@@ -43,10 +43,8 @@ public class FastCommand implements BotCommand {
             GameManager.stopGame(pGame, false);
         }
         String s = Objects.requireNonNull(event.getOption("선택")).getAsString();
-        GameType type;
-        boolean mean = s.endsWith("?");
-        if(mean) type = GameType.valueOf(s.substring(0, s.length() - 1));
-        else type = GameType.valueOf(s);
+        GameType type = GameType.valueOf(s);
+        boolean mean = Objects.requireNonNull(event.getOption("게임 모드")).getAsInt() == 1;
         Game game = GameManager.startGame(event.getUser().getIdLong(), event.getChannel().getIdLong(), type, true, mean);
         EmbedBuilder builder = new EmbedBuilder();
         builder.setTitle(type.getTag());

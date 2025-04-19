@@ -8,6 +8,8 @@ import net.dv8tion.jda.api.events.interaction.command.SlashCommandInteractionEve
 import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
 import net.dv8tion.jda.api.interactions.commands.build.SlashCommandData;
+import net.dv8tion.jda.api.interactions.components.ActionRow;
+import net.dv8tion.jda.api.interactions.components.buttons.Button;
 import org.jetbrains.annotations.NotNull;
 import org.mooner.wordbot.cmd.buttons.RiceButton;
 import org.mooner.wordbot.cmd.commands.FastCommand;
@@ -23,6 +25,7 @@ import java.awt.*;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.StringJoiner;
+import java.util.UUID;
 import java.util.concurrent.TimeUnit;
 
 import static org.mooner.wordbot.Main.jda;
@@ -97,6 +100,7 @@ public class BotEventListener extends ListenerAdapter {
                 if (game != null) {
                     if(message.getChannel().getIdLong() != game.getChannel()) return;
                     if(message.getContentRaw().equals("포기")) {
+                        UUID key = null;
                         message.delete().queue();
                         EmbedBuilder builder = new EmbedBuilder();
                         builder.setColor(Color.cyan);
@@ -108,12 +112,12 @@ public class BotEventListener extends ListenerAdapter {
                                 .appendDescription("\nPerfect: **" + game.getPerfect() + "**");
                         if(game.current() >= game.size() / 5) {
                             builder.appendDescription("\n\n아래의 Key를 복사하여 나중에 해당 문제 결과를 확인할 수 있습니다.");
-                            builder.setFooter("Key: " + GameManager.stopGame(game, true));
+                            builder.setFooter("Key: " + (key = GameManager.stopGame(game, true)));
                         } else {
                             builder.appendDescription("\n\n20% 이상 문제를 풀어야 문제 결과가 저장됩니다.");
                             GameManager.stopGame(game, false);
                         }
-                        game.getLastMessage().editMessageEmbeds(builder.build()).queue();
+                        game.getLastMessage().editMessage(key != null ? key.toString() : "").setEmbeds(builder.build()).queue();
                         return;
                     }
                     message.delete().queue();

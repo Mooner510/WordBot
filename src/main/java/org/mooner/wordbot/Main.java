@@ -11,6 +11,7 @@ import org.mooner.wordbot.game.GameType;
 
 import javax.security.auth.login.LoginException;
 import java.io.File;
+import java.io.FilenameFilter;
 import java.util.*;
 
 public class Main {
@@ -29,9 +30,12 @@ public class Main {
     public static void update() {
         resources = new HashMap<>();
 
-        for (String s : Objects.requireNonNull(new File("src/main/resources/data/2022/").list())) {
-            GameType type = GameType.fromKey("2025/" + s);
-            resources.put(type, new GameResource(type));
+        for (String key : Objects.requireNonNull(new File("src/main/resources/data/").list((dir, name) -> new File(dir, name).isDirectory()))) {
+            for (String s : Objects.requireNonNull(new File("src/main/resources/data/" + key + "/").list())) {
+                GameType type = GameType.fromKey(key + "/" + s);
+                if (type == null) continue;
+                resources.put(type, new GameResource(type));
+            }
         }
     }
 
@@ -40,8 +44,8 @@ public class Main {
 
         try {
             jda = JDABuilder.create(args[0], Arrays.asList(GatewayIntent.values()))
-                    .addEventListeners(commandListener = new BotEventListener())
-                    .build();
+                .addEventListeners(commandListener = new BotEventListener())
+                .build();
         } catch (LoginException e) {
             throw new RuntimeException(e);
         }
@@ -51,7 +55,8 @@ public class Main {
         jda.getPresence().setPresence(Activity.playing("/start"), true);
 
         Scanner scanner = new Scanner(System.in);
-        tag: while(true) {
+        tag:
+        while (true) {
             switch (scanner.nextLine()) {
                 case "update" -> {
                     update();

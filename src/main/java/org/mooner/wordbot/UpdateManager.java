@@ -16,7 +16,7 @@ public class UpdateManager {
             String[] mean;
             while ((s = reader.readLine()) != null) {
                 if (s.startsWith("#")) continue;
-                String[] s1 = s.split("-");
+                String[] s1 = s.split("(?<!\\\\)-");
                 eng = s1[0];
                 mean = s1[1].split(",");
 
@@ -36,7 +36,7 @@ public class UpdateManager {
             String[] mean;
             while ((s = reader.readLine()) != null) {
                 if (s.startsWith("#") || s.isBlank()) continue;
-                String[] s1 = s.split("-");
+                String[] s1 = s.split("(?<!\\\\)-");
                 eng = s1[0];
                 mean = s1[1].split(",");
 
